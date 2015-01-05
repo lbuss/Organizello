@@ -1,0 +1,9 @@
+<h3>Board Index</h3>
+<ul>
+<% boards.each( function(board) { %>
+    <li><a href="#/boards/<%=board.get('id')%>"> <%=board.escape("title")%></a>
+    </li>
+<% });  %>
+</ul>
+<div class="board-new">
+</div>
