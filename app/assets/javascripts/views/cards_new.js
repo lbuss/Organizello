@@ -1,9 +1,9 @@
 TrelloClone.Views.CardsNew = Backbone.CompositeView.extend({
   template: JST["cards/new"],
-	
-	initialize: function(options){
+
+  initialize: function(options){
 		
-	},
+  },
   
   events:{
     "submit form": "submitCard"
@@ -19,6 +19,7 @@ TrelloClone.Views.CardsNew = Backbone.CompositeView.extend({
     event.preventDefault();
     var view = this;
     var params = $(event.currentTarget).serializeJSON();
+	params.card.list_id = this.model.id;
     var newCard = new TrelloClone.Models.Card(params["card"]);
     newCard.save({}, {
       success: function() {

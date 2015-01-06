@@ -11,6 +11,16 @@ module Api
         render json: @card.errors.full_messages, status: :unprocessable_entity
       end
     end
+    
+    def update
+      @card = Card.find(params[:id])
+
+      if @card.update_attributes(card_params)
+        render json: @card
+      else
+        render json: @card.errors.full_messages, status: :unprocessable_entity
+      end
+    end
 
     private
 
@@ -28,7 +38,7 @@ module Api
     end
 
     def card_params
-      params.require(:card).permit(:title, :list_id)
+      params.require(:card).permit(:title, :list_id, :ordinal)
     end
   end
 end
