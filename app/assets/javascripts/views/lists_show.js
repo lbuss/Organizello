@@ -23,6 +23,8 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 	},
   
 	render: function() {
+		$('body').removeClass('modal-open');
+		$('.modal-backdrop').remove();
 		var renderedView = this.template({
 			list: this.model
 		});
@@ -47,7 +49,7 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
    
 		var cardNewView = new TrelloClone.Views.CardsNew({model: this.model});
 		that.$el.find(".newCard").append(cardNewView.render().$el);
-   
+		
 		this.attachSubviews();
 		return this;
 	},

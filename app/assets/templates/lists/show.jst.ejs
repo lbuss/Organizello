@@ -1,6 +1,23 @@
 
 <div  class="list panel panel-primary">
-    <div class="panel-heading"> <h4 class="panel-title"><%= list.escape('title') %>  </h4>
+    <div class="panel-heading"> <h4 class="panel-title"><%= list.escape('title') %>  </h4></div>
     <ol class="cards panel-body"></ol>
-	<div class="newCard"> </div>
+	<div class="panel-footer">
+		<a href="#" class="btn btn-lg btn-success"
+		   data-toggle="modal"
+		   data-target="#<%= list.escape('id') %>">Add Card</a>
+	</div>
+</div>
+
+<div class="modal fade" id="<%= list.escape('id') %>" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">New Card</h4>
+      </div>
+      <div class="modal-body newCard">
+      </div>
+    </div>
+  </div>
 </div>
