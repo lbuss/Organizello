@@ -1,4 +1,7 @@
 <div class="backdrop">
   <div id="main" class="container"></div>
 </div>
-<script>$(TrelloClone.initialize);</script>
+<script>
+	$(TrelloClone.initialize);
+	window.currentUser = <%= current_user.to_json.html_safe %>;
+</script>

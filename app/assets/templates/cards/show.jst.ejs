@@ -1,7 +1,29 @@
 <div class="panel panel-default">
-<div class="panel-header">
-<%= card.escape('title') %>
+<div class="panel-heading">
+   <h5 class="panel-title"><%= card.escape('title') %></h5>
 </div>
 <div class="panel-body">
+	<%= card.escape('description') %>
+	<ul class="items">
+	</ul>
 </div>
+	<% if(window.currentUser.id === this.model.collection.list.collection.board.get('user_id')){%>
+		<a href="#" class="btn-custom"
+		   data-toggle="modal"
+		   data-target="#card<%= card.escape('id') %>">New Item</a>	
+	<% }%>
+</div>
+
+
+<div class="modal fade" id="card<%= card.escape('id') %>" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add Item</h4>
+      </div>
+      <div class="modal-body newItem">
+      </div>
+    </div>
+  </div>
 </div>

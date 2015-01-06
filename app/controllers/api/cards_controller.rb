@@ -38,7 +38,7 @@ module Api
     end
 
     def card_params
-      params.require(:card).permit(:title, :list_id, :ordinal)
+      params.require(:card).permit(:title, :description, :list_id, :ordinal)
     end
   end
 end

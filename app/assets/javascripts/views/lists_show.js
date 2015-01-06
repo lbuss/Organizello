@@ -1,7 +1,7 @@
 TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 	template: JST["lists/show"],
 	
-	tagName: "li",
+	// tagName: "li",
 	
 	className: "list",
 	
@@ -23,21 +23,27 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 	},
   
 	render: function() {
+		
+		//clear bootstrap modal background, its bugged with backbone
 		$('body').removeClass('modal-open');
 		$('.modal-backdrop').remove();
+		
 		var renderedView = this.template({
 			list: this.model
 		});
 
 		this.$el.html(renderedView);
    
-		this.$el.find(".cards").sortable({
-			connectWith: '.cards',
+	   	 if(window.currentUser.id === this.model.collection.board.get('user_id')){
+   
+			this.$el.find(".cards").sortable({
+				connectWith: '.cards',
 			
-			stop: function(event, ui) {
-				ui.item.trigger('dropCard', ui.item.index());
-			}
-		});
+				stop: function(event, ui) {
+					ui.item.trigger('dropCard', ui.item.index());
+				}
+			});
+		}
    
 		var that = this;
 		this.collection.forEach( function(card) {
@@ -47,9 +53,11 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 			that.$el.find(".cards").append(cardView.render().$el);
 		})
    
-		var cardNewView = new TrelloClone.Views.CardsNew({model: this.model});
-		that.$el.find(".newCard").append(cardNewView.render().$el);
-		
+   	 	if(window.currentUser.id === this.model.collection.board.get('user_id')){
+			var cardNewView = new TrelloClone.Views.CardsNew({model: this.model});
+			that.$el.find(".newCard").append(cardNewView.render().$el);
+		}
+	
 		this.attachSubviews();
 		return this;
 	},

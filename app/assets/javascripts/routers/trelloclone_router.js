@@ -5,7 +5,8 @@ TrelloClone.Routers.TrelloCloneRouter = Backbone.Router.extend({
   },
   
   boardsIndex: function() {
-    TrelloClone.Collections.boards.fetch();
+    TrelloClone.Collections.boards = new TrelloClone.Collections.Boards;
+    this.loadBoards();
     var indexView = new TrelloClone.Views.BoardIndex({
       collection: TrelloClone.Collections.boards
     });  
@@ -28,6 +29,16 @@ TrelloClone.Routers.TrelloCloneRouter = Backbone.Router.extend({
    })
   
   this._swapView(boardShow);  
-  }
+  },
+  
+  loadBoards: function() {
+    $.ajax({url:'/api/boards',
+    dataType: 'json',
+    success: function(data){
+      TrelloClone.Collections.boards.set(data.boards);
+      TrelloClone.Collections.boards.trigger('sync');
+    }
+  })
+  },
   
 });

@@ -5,8 +5,11 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
     this.collection = this.model.lists();
     this.listenTo(this.model, "sync", this.render);
     this.listenTo(this.model.lists(), "sync", this.render);
-    var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
-    this.addSubview(".newList", ListNewView);
+	if(window.currentUser.id === this.model.get('user_id')){
+		//server checks auth token before changes are made, so client side id checking is just for formatting
+    	var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
+    	this.addSubview(".newList", ListNewView);
+	}
   },
   
   events: {
@@ -24,13 +27,16 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
       var view = new TrelloClone.Views.ListsShow({ model: list });
       $('.lists').append(view.render().$el)
     })
-    
-    this.$el.find(".lists").sortable({
-		stop: function(event, ui) {
-            ui.item.trigger('dropList', ui.item.index());
-		}
-    });
 	
+    
+	if(window.currentUser.id === this.model.get('user_id')){
+	    this.$el.find(".lists").sortable({
+			stop: function(event, ui) {
+	            ui.item.trigger('dropList', ui.item.index());
+			}
+	    });
+	}
+
     this.attachSubviews();
     return this;
   },
