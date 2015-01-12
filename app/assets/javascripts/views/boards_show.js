@@ -25,16 +25,18 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
       $('.lists').append(view.render().$el)
     })
 	
-    //only make sortable if board member. todo: authenticate membership of user session on server as well, or my boards will be hacked!
 	if(window.currentUser.id === this.model.get('user_id') || this.model.has_member(window.currentUser)){
-    	var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
-    	this.addSubview(".newList", ListNewView);
+    	if($('.newList').is(':empty')){
+			var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
+	    	this.addSubview(".newList", ListNewView);
+    	}
 	    this.$el.find(".lists").sortable({
 			stop: function(event, ui) {
 	            ui.item.trigger('dropList', ui.item.index());
 			}
 	    });
 	}
+	
     this.attachSubviews();
     return this;
   },
