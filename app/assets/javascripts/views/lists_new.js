@@ -3,8 +3,6 @@ TrelloClone.Views.ListsNew = Backbone.CompositeView.extend({
 
 	intialize: function(options){
 		console.log(options);
-		debugger;
-
 	},
 
 	events:{

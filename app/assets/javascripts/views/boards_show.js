@@ -17,6 +17,14 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
     var content = this.template({
       board: this.model
     });
+	
+	if(window.currentUser.id === this.model.get('user_id') || this.model.has_member(window.currentUser)){
+    	if(this.$el.find('.newList').is(':empty')){
+			var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
+	    	this.addSubview(".newList", ListNewView);
+    	}
+	}
+	
     this.$el.html(content);
     var that = this;
     
@@ -26,10 +34,6 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
     })
 	
 	if(window.currentUser.id === this.model.get('user_id') || this.model.has_member(window.currentUser)){
-    	if($('.newList').is(':empty')){
-			var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
-	    	this.addSubview(".newList", ListNewView);
-    	}
 	    this.$el.find(".lists").sortable({
 			stop: function(event, ui) {
 	            ui.item.trigger('dropList', ui.item.index());
