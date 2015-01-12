@@ -13,11 +13,13 @@
  *= require_tree .
  */
 
+//= depend_on_asset "contemporary_china.png"
+
 @import "bootstrap";
 @import "font-awesome";
 
 body{
-	background-image: url(images/contemporary_china.png);
+	background-image: url('<%= asset_path(contemporary_china.png) %>');
 }
 
 .newList {
