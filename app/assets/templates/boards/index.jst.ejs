@@ -1,17 +1,11 @@
 <h3>My Boards</h3>
-<ul>
-<% boards.each( function(board) { if(board.get("user_id") === window.currentUser.id) {%>
-    <li><a href="#/boards/<%=board.get('id')%>"> <%=board.escape("title")%></a>
-    </li>
-<% }});  %>
+<ul id="ownBoards">
 </ul>
-
+<h3>Member Boards</h3>
+<ul id="memberBoards">
+</ul>
 <h3>Other Boards</h3>
-<ul>
-<% boards.each( function(board) { if(board.get("user_id") != window.currentUser.id) {%>
-    <li><a href="#/boards/<%=board.get('id')%>"> <%=board.escape("title")%></a> by <%=board.escape("email")%>
-    </li>
-<% }});  %>
+<ul id="otherBoards">
 </ul>
 <div class="board-new">
 </div>

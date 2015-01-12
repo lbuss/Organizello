@@ -34,17 +34,6 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 
 		this.$el.html(renderedView);
    
-	   	 if(window.currentUser.id === this.model.collection.board.get('user_id')){
-   
-			this.$el.find(".cards").sortable({
-				connectWith: '.cards',
-			
-				stop: function(event, ui) {
-					ui.item.trigger('dropCard', ui.item.index());
-				}
-			});
-		}
-   
 		var that = this;
 		this.collection.forEach( function(card) {
 			var cardView = new TrelloClone.Views.CardsShow({
@@ -53,7 +42,15 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 			that.$el.find(".cards").append(cardView.render().$el);
 		})
    
-   	 	if(window.currentUser.id === this.model.collection.board.get('user_id')){
+   	 	if(window.currentUser.id === this.model.collection.board.get('user_id') || this.model.collection.board.has_member(window.currentUser)){
+			this.$el.find(".cards").sortable({
+				connectWith: '.cards',
+			
+				stop: function(event, ui) {
+					ui.item.trigger('dropCard', ui.item.index());
+				}
+			});
+			
 			var cardNewView = new TrelloClone.Views.CardsNew({model: this.model});
 			that.$el.find(".newCard").append(cardNewView.render().$el);
 		}

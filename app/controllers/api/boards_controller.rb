@@ -2,7 +2,7 @@ module Api
   class BoardsController < ApiController
     def create
       @board = current_user.boards.new(board_params)
-      # @board.members.new({usercurrent_user)
+      @board.members.new({user_id: current_user.id});
       if @board.save
         render json: @board
       else
@@ -17,7 +17,7 @@ module Api
     end
 
     def index
-      @boards = Board.all.includes(:user)
+      @boards = Board.all.includes(:user, :members)
       render :index
     end
 

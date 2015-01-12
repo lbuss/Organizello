@@ -26,7 +26,15 @@ class ApplicationController < ActionController::Base
     session[:token] = nil
   end
 
-  def require_signed_in!
-    redirect_to new_session_url unless signed_in?
+  def create_guest_if_needed
+    return if signed_in? # already logged in, don't need to create another one
+
+    user = User.new_guest
+
+    if user.save
+      sign_in!(user)
+      membership = current_user.board_memberships.new({board_id: 2})
+      membership.save
+    end
   end
 end

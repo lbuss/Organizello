@@ -2,14 +2,11 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
   template: JST["boards/show"],
   
   initialize: function(options){
-    this.collection = this.model.lists();
+    this.list_collection = this.model.lists();
+	this.member_collection = this.model.members();
     this.listenTo(this.model, "sync", this.render);
-    this.listenTo(this.model.lists(), "sync", this.render);
-	if(window.currentUser.id === this.model.get('user_id')){
-		//server checks auth token before changes are made, so client side id checking is just for formatting
-    	var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
-    	this.addSubview(".newList", ListNewView);
-	}
+    this.listenTo(this.list_collection, "sync", this.render);
+	this.listenTo(this.member_collection, "sync", this.render);
   },
   
   events: {
@@ -23,29 +20,30 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
     this.$el.html(content);
     var that = this;
     
-    this.collection.forEach(function(list){
+    this.list_collection.forEach(function(list){
       var view = new TrelloClone.Views.ListsShow({ model: list });
       $('.lists').append(view.render().$el)
     })
 	
-    
-	if(window.currentUser.id === this.model.get('user_id')){
+    //only make sortable if board member. todo: authenticate membership of user session on server as well, or my boards will be hacked!
+	if(window.currentUser.id === this.model.get('user_id') || this.model.has_member(window.currentUser)){
+    	var ListNewView = new TrelloClone.Views.ListsNew({ model: this.model });
+    	this.addSubview(".newList", ListNewView);
 	    this.$el.find(".lists").sortable({
 			stop: function(event, ui) {
 	            ui.item.trigger('dropList', ui.item.index());
 			}
 	    });
 	}
-
     this.attachSubviews();
     return this;
   },
   
   updateLists: function(event, model, position) {
 	  	console.log('update-lists event on collection');
-          this.collection.remove(model);
+          this.list_collection.remove(model);
 
-          this.collection.each(function (model, index) {
+          this.list_collection.each(function (model, index) {
               var ordinal = index;
               if (index >= position) {
                   ordinal += 1;
@@ -57,16 +55,6 @@ TrelloClone.Views.BoardsShow = Backbone.CompositeView.extend({
           });            
 
           model.save({'ordinal': position});
-          this.collection.add(model, {at: position});
-
-          // to update ordinals on server:
-          var ids = this.collection.pluck('id');
-		  console.log(ids.join(', '));
-          // $('#post-data').html('post ids to server: ' + ids.join(', '));
-
-          // this.render();
+          this.list_collection.add(model, {at: position});
     }
 });
-
-
-// , handle: '.panel-heading'

@@ -38,7 +38,7 @@ TrelloClone.Views.CardsShow = Backbone.CompositeView.extend({
 			that.$el.find(".items").append(itemView.render().$el);
 		})
 		
-   	 	if(window.currentUser.id === this.model.collection.list.collection.board.get('user_id')){
+   	 	if(window.currentUser.id === this.model.collection.list.collection.board.get('user_id') || this.model.collection.list.collection.board.has_member(window.currentUser)){
 			var itemNewView = new TrelloClone.Views.ItemsNew({model: this.model});
 			that.$el.find(".newItem").append(itemNewView.render().$el);
 		}

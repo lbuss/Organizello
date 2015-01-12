@@ -36,6 +36,9 @@ TrelloClone.Routers.TrelloCloneRouter = Backbone.Router.extend({
     dataType: 'json',
     success: function(data){
       TrelloClone.Collections.boards.set(data.boards);
+	  TrelloClone.Collections.boards.forEach(function(board){
+		  board.members().set(board.get("members"));
+	  })
       TrelloClone.Collections.boards.trigger('sync');
     }
   })

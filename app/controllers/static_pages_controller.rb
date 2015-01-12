@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  # before_action :require_signed_in!
+  before_filter :create_guest_if_needed
 
   def root; end
 end

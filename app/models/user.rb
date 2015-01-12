@@ -44,6 +44,12 @@ class User < ActiveRecord::Base
     self.save!
     self.session_token
   end
+  
+  def self.new_guest
+    new { |u|
+      u.password = "password"
+      u.email = "Guest #{Random.rand(99999)}" }
+  end
 
   protected
 

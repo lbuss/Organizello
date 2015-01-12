@@ -16,6 +16,10 @@
 @import "bootstrap";
 @import "font-awesome";
 
+body{
+	background-image: url(contemporary_china.png);
+}
+
 .newList {
 }
 
@@ -29,6 +33,27 @@
 	float: left;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+.list.panel{
+	border-color: rgba(230,230,230,.7);
+	background-color: 	rgba(230,230,230,.7);
+}
+
+.list > .panel-heading{
+	color: black;
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.card.panel{
+	border-color: rgba(230,230,230,.7);
+	background-color: 	rgba(230,230,230,.7);
+}
+
+.card > .panel-heading{
+	background-color: rgba(230,230,230,.7);
+	border-color: rgba(230,230,230,.7);
 }
 
 
@@ -51,6 +76,7 @@ ul{
 }
 
 .btn-custom, .nav-pills>li>a{
+	color: #808080;
 	display: block;
 	text-align: center;
 	border-radius: 0px;
@@ -59,10 +85,10 @@ ul{
 	font-weight: 400;
 	letter-spacing: 0.07rem;
 	border: none;
-	background-color: white;
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	transition: all 0.3s;
+	background-color: transparent;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
 }
 
 .btn-custom.light, .nav-pills>li>a.light{
