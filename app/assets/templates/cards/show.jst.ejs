@@ -1,6 +1,11 @@
 <div class="panel panel-default">
 <div class="panel-heading">
-   <h5 class="panel-title"><%= card.escape('title') %></h5>
+   <h5 class="panel-title">
+	<% if(window.currentUser.id === this.model.collection.list.collection.board.get('user_id') || this.model.collection.list.collection.board.has_member(window.currentUser)){%>
+	        <button type="button" class="delete card">&times;</button>
+	<% }%>
+	<%= card.escape('title') %>
+	</h5>
 </div>
 <div class="panel-body">
 	<%= card.escape('description') %>

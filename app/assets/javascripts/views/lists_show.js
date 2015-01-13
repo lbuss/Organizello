@@ -6,7 +6,8 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 	className: "list",
 	
 	events: {
-		'dropList' : 'drop',
+		'click .delete.list': 'deleteList', 
+		'dropList': 'drop',
 		'update-cards': 'updateCards'
 	},
 	    
@@ -14,7 +15,7 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 	initialize: function() {
 		this.collection = this.model.cards();
 		this.listenTo(this.model, "sync", this.render);
-		this.listenTo(this.model.cards(), "sync", this.render);
+		this.listenTo(this.model.cards(), "sync remove", this.render);
 	},
   
 	drop: function(event, index) {
@@ -60,6 +61,7 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 	},
 	
 	updateCards: function(event, model, position) {
+		//I should move most of this method to the list model
 		console.log('update-add event on collection');
 		
 		if(this.collection != model.collection){
@@ -96,6 +98,14 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
 		
 		this.collection.add(model, {at: position});
 		model.save({'ordinal': position, 'list_id': list.id});
+	},
+	
+	deleteList: function() {
+	  if (confirm('Are you sure you want to delete this list?')) {
+		var coll = this.model.collection;
+		coll.remove(this.model);
+	    this.model.destroy();
+	  }
+	  return false;
 	}
-	 
 })

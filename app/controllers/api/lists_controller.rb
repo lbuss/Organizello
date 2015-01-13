@@ -1,6 +1,6 @@
 module Api
   class ListsController < ApiController
-    before_action :require_board_member!
+    before_action -> (param = current_board) { require_board_member! param }, only: [:edit, :update, :destroy]
 
     def create
       @list = current_board.lists.new(list_params)

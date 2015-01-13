@@ -12,7 +12,8 @@ TrelloClone.Views.CardsShow = Backbone.CompositeView.extend({
 	},
 
 	events: {
-		'dropCard' : 'drop'
+		'click .delete.card': 'deleteCard',
+		'dropCard': 'drop'
 	},
 
 	drop: function(event, index) {
@@ -44,6 +45,15 @@ TrelloClone.Views.CardsShow = Backbone.CompositeView.extend({
 		}
 		
 		return this;
+	},
+	
+	deleteCard: function() {
+	  if (confirm('Are you sure you want to delete this card?')) {
+		var coll = this.model.collection;
+		coll.remove(this.model);
+	    this.model.destroy();
+	  }
+	  return false;
 	}
   
 });
