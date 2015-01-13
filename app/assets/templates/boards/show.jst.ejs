@@ -1,7 +1,28 @@
-<div class="newList"></div>
+<!-- <div class="newList"></div> -->
 
 
-<h3><%= board.escape('title') %> </h3>
+<h3><%= board.escape('title') %>
+	 <% if(window.currentUser.id === board.get('user_id') || board.has_member(window.currentUser)){%>
+			<a href="#" class="btn-custom addList"
+			   data-toggle="modal"
+			   data-target="#board<%= board.escape('id') %>">Add List</a>	
+	<% }%>
+</h3>	
+ 
 
 <ul class="lists"> </ul>
 <br>
+
+
+
+<div class="modal fade" id="board<%= board.escape('id') %>" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">New List</h4>
+      </div>
+      <div class="modal-body newList"></div>
+    </div>
+  </div>
+</div>

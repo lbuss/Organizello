@@ -3,7 +3,7 @@
     <div class="panel-heading"> 
 		<h4 class="panel-title">
 		<% if(window.currentUser.id === this.model.collection.board.get('user_id') || this.model.collection.board.has_member(window.currentUser)){%>
-		        <button type="button" class="delete list">&times;</button>
+		        <button type="button" class="delete listButton">&times;</button>
 		<% }%>
 			<%= list.escape('title') %>		
 		</h4>
