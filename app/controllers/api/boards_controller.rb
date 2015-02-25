@@ -2,7 +2,8 @@ module Api
   class BoardsController < ApiController
     def create
       @board = current_user.boards.new(board_params)
-      @board.members.new({user_id: current_user.id});
+      # debugger
+      # @board.members.new({user_id: current_user.id});
       if @board.save
         render json: @board
       else
