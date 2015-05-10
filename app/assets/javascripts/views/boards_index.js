@@ -12,19 +12,26 @@ TrelloClone.Views.BoardIndex = Backbone.CompositeView.extend({
 	
 	this.$el.html(renderedContent);
 	
-	this.collection.forEach( function(board) {
-		if(board.get("user_id") === window.currentUser.id) { 
-		    $("#ownBoards").append("<li><a href='#/boards/" + board.get('id') + "'>" + board.escape("title") + "</a></li>");
-		 }
+	if(window.currentUser){
+		this.collection.forEach( function(board) {
+			if(board.get("user_id") === window.currentUser.id) { 
+			    $("#ownBoards").append("<li><a href='#/boards/" + board.get('id') + "'>" + board.escape("title") + "</a></li>");
+			 }
 		
-		if(board.get("user_id") != window.currentUser.id && board.has_member(window.currentUser)) { 
-			$("#memberBoards").append("<li><a href='#/boards/" + board.get('id') + "'>" + board.escape("title") + "</a> by " + board.escape("email") + "</li>");
-		}
+			if(board.get("user_id") != window.currentUser.id && board.has_member(window.currentUser)) { 
+				$("#memberBoards").append("<li><a href='#/boards/" + board.get('id') + "'>" + board.escape("title") + "</a> by " + board.escape("email") + "</li>");
+			}
 
-		if(board.get("user_id") != window.currentUser.id && !board.has_member(window.currentUser)) { 
+			if(board.get("user_id") != window.currentUser.id && !board.has_member(window.currentUser)) { 
+				$("#otherBoards").append("<li><a href='#/boards/" + board.get('id') + "'>" + board.escape("title") + "</a> by " + board.escape("email") + "</li>");
+			}
+		});
+	}else{
+		this.collection.forEach( function(board) {
 			$("#otherBoards").append("<li><a href='#/boards/" + board.get('id') + "'>" + board.escape("title") + "</a> by " + board.escape("email") + "</li>");
-		}
-	});
+		});
+	}
+	
 	
     
     this.attachSubviews();
