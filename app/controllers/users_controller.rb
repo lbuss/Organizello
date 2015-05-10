@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
-  def new; end
+  before_filter :create_guest_if_needed, except:[:index]
+  def new
+    #automatic sign in by before filter
+    redirect_to root_url
+  end
 
   def create
+    
     @user = User.new(user_params)
 
     if @user.save

@@ -1,5 +1,10 @@
 class SessionsController < ApplicationController
-  def new; end
+  before_filter :create_guest_if_needed, except: [:destroy]
+  
+  def new
+    #automatic sign in by before filter
+    redirect_to root_url
+  end
 
   def create
     @user = User.find_by_credentials(params[:user])
@@ -15,6 +20,6 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out!
-    redirect_to new_session_url
+    redirect_to root_url
   end
 end
